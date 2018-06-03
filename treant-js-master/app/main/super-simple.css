@@ -1,0 +1,81 @@
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+form,
+fieldset,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #fff;
+}
+
+/* optional Container STYLES */
+
+.chart {
+    height: 600px;
+    width: 800px;
+    margin: 5px;
+    margin: 5px auto;
+    border: 3px solid #DDD;
+    border-radius: 3px;
+}
+
+.node {
+    color: #9CB5ED;
+    border: 2px solid #C8C8C8;
+    border-radius: 3px;
+}
+
+.node p {
+    font-size: 20px;
+    line-height: 20px;
+    height: 20px;
+    font-weight: bold;
+    padding: 3px;
+    margin: 0;
+}
+
+/* Textbox */
+
+input[type=text] {
+    position: relative;
+    margin: 0px;
+    width: 800px;
+    border: 2px solid #aaa;
+    border-radius: 4px;
+    outline: none;
+    padding: 8px;
+    box-sizing: border-box;
+    transition: .3s;
+    position: absolute;
+    text-align: center;
+    top: 635px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+input[type=text]:focus {
+    border-color: dodgerBlue;
+    box-shadow: 0 0 8px 0 dodgerBlue;
+}
