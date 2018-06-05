@@ -14,23 +14,23 @@ import com.mkyong.Message;
 
 @Path("/json")
 public class JSONService {
-	
-	ExpressionTree tree = new ExpressionTree();
-	String stack;
-	
+
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Message getTreeInJSON() {
+	public Message getTrackInJSON() {
+		
 		Message message = new Message();
+		ExpressionTree tree = new ExpressionTree();
 		
 		tree.setText("0");
-		stack = "[0]";
+		String stack = "[0]";
 		
 		message.setTree(tree);
 		message.setStack(stack);
 		
 		return message;
+
 	}
 
 	@POST
@@ -38,21 +38,23 @@ public class JSONService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Message createTreeInJSON(Expression expression) {
-		Message message = new Message();
+		ExpressionTree tree = new ExpressionTree();
 		
 		// For testing
 		String result = "Converted the expression ''" + expression.getExpression() + "'' to a tree.";
 		System.out.println(result);
 		
-		// stack = tree.update(expression);
+		//String stack = tree.update(expression);
 		
 		// For testing
 		tree.setText(expression.getExpression());
-		stack = "[" + expression.getExpression() + "]";
+		String stack = "[" + expression.getExpression() + "]";
 		
-		message.setTree(tree);
+		Message message = new Message();
 		message.setStack(stack);
+		message.setTree(tree);
 		
 		return message;
 	}
+	
 }
