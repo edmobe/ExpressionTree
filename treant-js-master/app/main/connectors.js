@@ -1,9 +1,20 @@
-var tree = getTree();
+function init() {
 
-console.log("Iteration in JS");
+	if (localStorage.getItem("expression") == null) {
+		localStorage.setItem("expression", "0");
+		document.getElementById("treeStack").innerHTML = "[0]";
+	}
+
+	if (localStorage.getItem("stack") == null) {
+		localStorage.setItem("stack", "[0]");
+		document.getElementById("treeStack").innerHTML = "[0]";
+	}
+
+	var chart = new Treant(getChartConfig());
+
+}
 
 function submitted() {
-	console.log("Iteration submitted");
 	var textbox = document.getElementById("textbox");
 	if (textbox == null) {
 		return false;
@@ -13,37 +24,30 @@ function submitted() {
 			alert("Please enter an expression");
 			return false;
 		} else {
-			editTree();
+			editTree(textboxValue);
 			return true;
 		}
 	}
 }
 
-function editTree(expression) {
-	console.log(chart);
-	chart.tree.reload();
+function editTree(input) {
+	localStorage.setItem("expression", input);
 }
 
-function getTree() {	
-	tree = {
-		text: {
-			name: "0"
-		},
-		children: [{
-				text: {
-					name: "100"
-				}
-			},
-			{
-				text: {
-					name: "14"
-				}
-			}
+function getTree() { // USING POST METHOD (From: https://stackoverflow.com/questions/6418220/javascript-send-json-object-with-ajax)
+	var xmlhttp = new XMLHttpRequest(); // new HttpRequest instance 
+	xmlhttp.open("POST", "http://localhost:8080/Server/rest/json/post", false);
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send(JSON.stringify({
+		expression: localStorage.getItem("expression")
+	}));
 
-		]
-	};
+	var message = JSON.parse(xmlhttp.responseText);
+	console.log(message);
+	localStorage.setItem("stack", message.stack);
+	document.getElementById("treeStack").innerHTML = message.stack;
 
-	return tree;
+	return message.tree;
 }
 
 function getChartConfig() {
@@ -63,24 +67,12 @@ function getChartConfig() {
 			}
 		},
 
-		nodeStructure: tree
+		nodeStructure: getTree()
 	};
 
 	return chart_config;
 }
 
-
-// Sending and receiving data in JSON format using POST method
-
-var xhr = new XMLHttpRequest();
-var url = "url";
-xhr.open("POST", url, true);
-xhr.setRequestHeader("Content-Type", "application/json");
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
-        console.log(json.email + ", " + json.password);
-    }
-};
-var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
-xhr.send(data);
+function about() {
+	window.location = "https://github.com/edmobe/expressionTree";
+}

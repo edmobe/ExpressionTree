@@ -5,26 +5,32 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width">
-	<title> Expression trees </title>
+	<title>Expression tree generator</title>
 	<link rel="stylesheet" href="../../Treant.css">
 	<link rel="stylesheet" href="connectors.css">
 
 </head>
 
-<body>
+<body onload="init()">
+
+	<div class="topnav">
+		<a class="active" href="#home">Expression tree generator</a>
+		<a href="#about" onclick="about()">About</a>
+	</div>
+
 	<div class="chart" id="OrganiseChart-big-commpany"></div>
 
 	<script src="../../vendor/raphael.js"></script>
 	<script src="../../Treant.js"></script>
 	<script src="connectors.js"></script>
 
-	<script>
-		var chart = new Treant(getChartConfig());
-	</script>
-
-	<form id="input" type="text" onsubmit="submitted()", action="#">
+	<form id="input" type="text" onsubmit="submitted()">
 		<input id="textbox" type="text" placeholder="Enter expression here (without spaces please &#x1F60A;)">
 	</form>
+
+	<h3 class="stack">Stack: 
+		<span id="treeStack"></span>
+	</h3>
 
 </body>
 
