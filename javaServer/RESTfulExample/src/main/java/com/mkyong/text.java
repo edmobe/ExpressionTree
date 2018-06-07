@@ -2,14 +2,14 @@ package com.mkyong;
 
 public class text {
 
-	String name;
+	char name;
 
-	public String getName() {
+	public char getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(char name) {
 		this.name = name;
 	}
-	
+
 }

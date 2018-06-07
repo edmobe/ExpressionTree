@@ -2,12 +2,12 @@ function init() {
 
 	if (sessionStorage.getItem("expression") == null) {
 		sessionStorage.setItem("expression", "0");
-		document.getElementById("treeStack").innerHTML = "[0]";
+		document.getElementById("treeStack").innerHTML = "0";
 	}
 
 	if (sessionStorage.getItem("stack") == null) {
-		sessionStorage.setItem("stack", "[0]");
-		document.getElementById("treeStack").innerHTML = "[0]";
+		sessionStorage.setItem("stack", "0");
+		document.getElementById("treeStack").innerHTML = "0";
 	}
 
 	var chart = new Treant(getChartConfig());
@@ -20,10 +20,20 @@ function submitted() {
 		return false;
 	} else {
 		var textboxValue = textbox.value;
-		if (textboxValue == "") {
-			alert("Please enter an expression");
+		var opCode = validInput(textboxValue);
+		if (opCode != 0) {
+			if (opCode == 1) {
+				alert("Please enter an expression");
+			} else if (opCode == 2) {
+				alert("Spaces are not allowed!");
+			} else if (opCode == 3) {
+				alert("Invalid character! Allowed characters are numbers and: * / + - ( )");
+			} else if (opCode == 4) {
+				alert("You must enter only one digit numbers!");
+			}
 			return false;
-		} else {
+		}
+		else {
 			editTree(textboxValue);
 			return true;
 		}
@@ -75,4 +85,40 @@ function getChartConfig() {
 
 function about() {
 	window.location = "https://github.com/edmobe/expressionTree";
+}
+
+function validInput(input) {
+	if (input == "") {
+		return 1;
+	}
+
+	array = input.split("");
+
+	var pastNum = false; // indicates if a number was read in the last iteration
+	for (var i = 0; i < array.length; i++) {
+		var char = input[i];
+
+		if (char == " ") {
+			return 2;
+		}
+
+		if (char != '1' && char != '2' && char != '3' && char != '4' && char != '5' && char != '6' && char != '7' &&
+		char != '8' && char != '9' && char != '0' && char != '*' && char != '/' && char != '+' && char != '-' &&
+		char != '(' && char != ')' ) {
+			return 3;
+		}
+
+		if (char == '1' || char == '2' || char == '3' || char == '4' || char == '5' || char == '6' || char == '7' ||
+		char == '8' || char == '9' || char == '0') {
+			if (pastNum) {
+				return 4;
+			} else {
+				pastNum = true;
+			}
+		} else {
+			pastNum = false;
+		}
+	}
+
+	return 0;
 }
